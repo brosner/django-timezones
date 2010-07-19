@@ -122,6 +122,9 @@ def prep_localized_datetime(sender, **kwargs):
                 return getattr(instance, dt_field_name)
 
             def set_dtz_field(instance, dt):
+                if dt is None: # Allow None here (db will catch later for null=False)
+                    setattr(instance, dt_field_name, None)
+                    return
                 if dt.tzinfo is None:
                     dt = default_tz.localize(dt)
                 time_zone = field.timezone

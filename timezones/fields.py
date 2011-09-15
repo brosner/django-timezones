@@ -104,6 +104,15 @@ class LocalizedDateTimeField(models.DateTimeField):
             value = default_tz.localize(value)
         else:
             value = value.astimezone(default_tz)
+        
+        # Make sure the DB can handle timezone-aware dates (hint: MySQL cannot)
+        if connection and getattr(connection, "ops") and getattr(connection.ops, "value_to_db_datetime"):
+            try:
+                connection.ops.value_to_db_datetime(value)
+            except ValueError:
+                # DB doesn't support timezones, so strip it off
+                value = value.replace(tzinfo=None)
+        
         return super(LocalizedDateTimeField, self).get_db_prep_lookup(lookup_type, value, connection=connection, prepared=prepared)
 
 

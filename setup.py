@@ -13,6 +13,7 @@ setup(
         "timezones",
         "timezones.templatetags",
     ],
+    install_requires=['pytz'],
     classifiers = [
         "Development Status :: 4 - Beta",
         "Environment :: Web Environment",

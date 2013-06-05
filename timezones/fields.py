@@ -59,6 +59,12 @@ class TimeZoneField(models.CharField):
             value = ""
         return {self.attname: smart_unicode(value)}
 
+    def south_field_triple(self):
+        from south.modelsinspector import introspector
+        field_class = "django.db.models.CharField"
+        args, kwargs = introspector(self)
+        return (field_class, args, kwargs)
+
 
 class LocalizedDateTimeField(models.DateTimeField):
     """
@@ -105,6 +111,12 @@ class LocalizedDateTimeField(models.DateTimeField):
         else:
             value = value.astimezone(default_tz)
         return super(LocalizedDateTimeField, self).get_db_prep_lookup(lookup_type, value, connection=connection, prepared=prepared)
+
+    def south_field_triple(self):
+        from south.modelsinspector import introspector
+        field_class = "django.db.models.DateTimeField"
+        args, kwargs = introspector(self)
+        return (field_class, args, kwargs)
 
 
 def prep_localized_datetime(sender, **kwargs):

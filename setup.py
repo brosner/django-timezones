@@ -8,7 +8,7 @@ setup(
     description = "A Django reusable app to deal with timezone localization for users",
     long_description = open("README").read(),
     url = "http://github.com/brosner/django-timezones/",
-    license = "BSD",
+    license = "MIT",
     packages = [
         "timezones",
         "timezones.templatetags",

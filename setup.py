@@ -24,3 +24,5 @@ setup(
         "Framework :: Django",
     ]
 )
+
+# test
